@@ -1,0 +1,48 @@
+﻿apache配置
+	\Apache\conf\extra\httpd-vhosts.conf   虚拟主机目录配置
+	
+	<VirtualHost *:80>
+    	ServerAdmin www.tp.com
+    	DocumentRoot "C:/phpStudy/WWW/tp5/public"
+    	ServerName www.tp.com
+    	ErrorLog "logs/dummy-host2.example.com-error.log"
+    	CustomLog "logs/dummy-host2.example.com-access.log" common
+	</VirtualHost>
+
+
+1、入口文件位置\tp5\public\index.php
+
+
+2、增加后台入口文件 admin.php \tp5\public\admin.php
+
+index.php  绑定前台模块  define('BIND_MODULE','index');
+admin.php  绑定后台模块  define('BIND_MODULE','admin');
+
+
+前台访问地址  http://www.tp.com/index.php/index/index
+
+后台访问地址  http://www.tp.com/admin.php/index/index
+
+3、隐藏入口文件
+
+	配置apache重写\Apache\conf\httpd.conf
+	LoadModule rewrite_module modules/mod_rewrite.so  取消注释
+	将allowoverride 改为all
+
+	<VirtualHost *:80>
+    	ServerAdmin www.tp.com
+    	DocumentRoot "C:/phpStudy/WWW/tp5/public"
+    	ServerName www.tp.com
+    	<Directory "C:/phpStudy/WWW/tp5/public">
+    		AllowOverride All
+    	</Directory>
+    	ErrorLog "logs/dummy-host2.example.com-error.log"
+    	CustomLog "logs/dummy-host2.example.com-access.log" common
+	</VirtualHost>
+
+4、在网站入口的同级目录新建.htaccess文件（应该是有的）
+
+5、重启服务
+前台访问地址  http://www.tp.com/index/index
+
+后台访问地址  http://www.tp.com/index/index
